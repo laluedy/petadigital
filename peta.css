@@ -1,0 +1,77 @@
+/* Gaya untuk marker kustom */
+.custom-marker {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    text-align: center;
+    line-height: 25px;
+    font-weight: bold;
+    color: #fff;
+}
+
+#map { height: 500px; }
+
+.marker-jakarta {
+    background-color: #FF0000;
+    }
+
+.marker-yogyakarta {
+    background-color: #eeff05;
+}
+
+.marker-denpasar {
+    background-color: #0000FF;
+}
+
+.marker-mataram {
+    background-color: #ff00e1;
+}
+
+.marker-kupang {
+    background-color: #800000;
+}
+
+.marker-perambahan {
+    background-color: #03d643;
+}
+
+/* style kolom keterangan */
+
+
+.keterangan-warna ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.keterangan-warna li {
+    margin-bottom: 5px;
+}
+.warna-sample {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-right: 10px;
+}
+
+#searchInput {
+    margin: 5px 0;
+}
+#searchInput {
+    padding: 5px;
+    margin-right: 5px;
+    width: 200px;
+}
+#searchBtn {
+    padding: 5px 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+#searchBtn:hover {
+    background-color: #45a049;
+}
+    

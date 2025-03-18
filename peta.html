@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mapkasus</title>
+    <link rel="stylesheet" href="peta.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+</head>
+    <body>
+        <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
+        <script src="https://unpkg.com/leaflet-kml@latest/L.KML.js"></script>        
+         
+        <div style="text-align: center; margin: 0;">
+            <h3 style="margin-bottom: 2px;">Peta Sebaran Kasus Penyidikan</h3>
+            <h4 style="margin-top: 5px;">Wilayah Seksi III Kupang</h4>
+            <input type="text" id="searchInput" placeholder="Cari lokasi...">
+            <button id="searchBtn">Cari</button>    
+        </div>
+
+        <div id="map" style="height: 600px;"></div>
+        
+        <script src="data.js"></script>  
+    
+            <!-- Tombol untuk mengunduh file KML dan KMZ serta input untuk mengunggah file -->
+        <div style="text-align: center; margin: 10px;">
+        <button onclick="downloadKML()">Download KML</button> <!-- Tombol download KML -->
+        <button onclick="downloadKMZ()">Download KMZ</button> <!-- Tombol download KMZ -->        
+        </div>
+    
+
+    <!-- Tambahkan JSZip library untuk membuat file KMZ -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
+    <!-- **** -->
+
+    <script src="map.js"></script> 
+
+    <!-- untuk kolom keterangan -->
+    <div class="keterangan-warna">
+        <h4>Keterangan Warna</h4>
+        <ul>
+            <li><span class="warna-sample marker-jakarta"></span> Pembalakan Liar</li>            
+            <li><span class="warna-sample marker-yogyakarta"></span> Kejahatan TSL</li>
+            <li><span class="warna-sample marker-perambahan"></span> Perambahan Hutan</li>
+            <!-- <li><span class="warna-sample marker-denpasar"></span> Pencemaran Lingkungan</li> -->
+            <li><span class="warna-sample marker-mataram"></span> Penambangan Tanpa Ijin</li>
+            <li><span class="warna-sample marker-kupang"></span> Kebakaran Hutan</li>
+            
+
+            
+        </ul>
+    </div>
+    
+    <!-- grafik proses kasus -->
+    <div id="donutChart"></div>
+    <!-- Grafik target tahunan -->
+
+    
+    <div id="progressChart">
+    <script>        
+    // Menentukan target total kasus dalam satu tahun
+    var targetTahunan = 40; 
+
+    // Menentukan jumlah kasus yang telah selesai
+    var kasusSelesai = 40;  
+
+    // Melakukan pengecekan apakah kasus selesai melebihi target
+    if (kasusSelesai > targetTahunan) {
+        console.warn("Peringatan: Kasus selesai melebihi target tahunan.");
+        kasusSelesai = targetTahunan; // Menghindari nilai negatif pada grafik
+    }
+
+    // Menghitung persentase pencapaian target
+    var persentaseTarget = (kasusSelesai / targetTahunan) * 100;
+
+    // Menentukan data untuk diagram pie
+    var data = [{
+        values: [kasusSelesai, targetTahunan - kasusSelesai], // Memastikan tidak ada nilai negatif
+        labels: ['Kasus Selesai', 'Sisa Target'],
+        type: 'pie', 
+        hole: .4, // Membuat chart berbentuk donut
+        marker: {
+            colors: ['#36A2EB', '#e0e0e0'] // Warna untuk masing-masing bagian pie chart
+        },
+        textinfo: "label+percent", // Menampilkan label dan persentase
+        insidetextorientation: "radial" // Mengatur orientasi teks dalam pie chart
+    }];
+
+    // Mengatur layout grafik
+    var layout = {
+        title: 'Progress Target Tahunan', // Judul grafik
+        annotations: [{
+            font: {size: 20}, // Ukuran font persentase di tengah
+            showarrow: false, 
+            text: persentaseTarget.toFixed(1) + '%', // Menampilkan persentase dengan 1 angka di belakang koma
+            x: 0.5, 
+            y: 0.5
+        }],
+        height: 400, // Tinggi grafik
+        width: 500 // Lebar grafik
+    };
+
+    // Menampilkan grafik di dalam elemen dengan id 'progressChart'
+    Plotly.newPlot('progressChart', data, layout);
+</script>
+
+    </script>
+    <!-- <script src="https://cdn.plot.ly/plotly-latest.min.js"></script> -->
+     <script src="plotgrafik.js"></script>
+     <!-- ***** -->
+    <script>
+        var data = [{
+            values: [17, 5, 2, 2, 5],
+            labels: ['P21', 'Puldasi', 'Sidik', 'P19', 'Pulbaket'],
+            type: 'pie',
+            hole: .4,
+            marker: {
+                colors: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF']
+            },
+            textinfo: "label+percent",
+            insidetextorientation: "radial"
+        }];
+
+        var layout = {
+            title: 'Progress Penyelesaian Kasus',
+            height: 400,
+            width: 500
+        };
+
+        Plotly.newPlot('donutChart', data, layout);
+    </script>
+    </div>
+
+    <script src="kmz.js"></script>
+    
+</body>
+</html>
